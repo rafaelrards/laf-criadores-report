@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoramento Criadores · 2026-09-04 · LAF</title>
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-elev: #12151c;
+    --bg-card: #171b24;
+    --bg-card-hover: #1d2230;
+    --border: #2a3142;
+    --border-soft: #222836;
+    --text: #e8ecf4;
+    --text-muted: #9aa3b5;
+    --text-dim: #6b7385;
+    --accent: #6ee7b7;
+    --accent-dim: rgba(110, 231, 183, 0.12);
+    --accent-2: #60a5fa;
+    --accent-2-dim: rgba(96, 165, 250, 0.12);
+    --warn: #fbbf24;
+    --warn-dim: rgba(251, 191, 36, 0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244, 114, 182, 0.12);
+    --yt: #ff6b6b;
+    --x: #e8ecf4;
+    --ig: #e879f9;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.35);
+    --max: 1100px;
+    --nav-h: 56px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6; font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .nav {
+    position: sticky; top: 0; z-index: 100; height: var(--nav-h);
+    background: rgba(11, 13, 18, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 0 20px; height: 100%;
+    display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-weight: 700; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--accent); white-space: nowrap; margin-right: 12px; flex-shrink: 0;
+  }
+  .nav a {
+    color: var(--text-muted); font-size: 13px; padding: 6px 10px; border-radius: 8px;
+    white-space: nowrap; text-decoration: none; transition: background 0.15s, color 0.15s;
+  }
+  .nav a:hover { background: var(--bg-card); color: var(--text); text-decoration: none; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px 80px; }
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border-soft); margin-bottom: 48px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+    background: var(--accent-dim); padding: 6px 12px; border-radius: 999px; margin-bottom: 20px;
+  }
+  .badge::before {
+    content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .hero h1 {
+    font-size: clamp(1.85rem, 4.5vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .hero .lead { font-size: 1.1rem; color: var(--text-muted); max-width: 640px; margin-bottom: 24px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 13px; color: var(--text-dim); }
+  .meta-row strong { color: var(--text-muted); font-weight: 600; }
+  section { margin-bottom: 64px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+  .sec-num { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; }
+  h2 { font-size: clamp(1.35rem, 2.5vw, 1.65rem); font-weight: 750; letter-spacing: -0.02em; }
+  .sec-desc { color: var(--text-muted); margin-bottom: 28px; max-width: 680px; font-size: 0.95rem; }
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 900px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .grid-2, .grid-4 { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--radius);
+    padding: 20px; transition: border-color 0.15s, background 0.15s;
+  }
+  .card:hover { border-color: var(--border); background: var(--bg-card-hover); }
+  .bio-card {
+    background: linear-gradient(145deg, var(--bg-card) 0%, #141a28 100%);
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; display: grid; gap: 20px;
+  }
+  .bio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .chip {
+    background: var(--bg-elev); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 12px 14px;
+  }
+  .chip label {
+    display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 4px;
+  }
+  .chip span { font-size: 14px; color: var(--text); }
+  .metric { text-align: left; }
+  .metric .val {
+    font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; color: var(--text);
+  }
+  .metric .val.accent { color: var(--accent); }
+  .metric .val.blue { color: var(--accent-2); }
+  .metric .val.warn { color: var(--warn); }
+  .metric .val.pink { color: var(--pink); }
+  .metric .lbl {
+    font-size: 12px; color: var(--text-dim); margin-top: 4px; text-transform: uppercase;
+    letter-spacing: 0.05em; font-weight: 600;
+  }
+  .metric .sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+  .tag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 6px;
+  }
+  .tag-yt { background: rgba(255,107,107,0.15); color: var(--yt); }
+  .tag-x { background: rgba(232,236,244,0.1); color: var(--x); }
+  .tag-ig { background: var(--pink-dim); color: var(--ig); }
+  .tag-pack { background: var(--accent-2-dim); color: var(--accent-2); }
+  .tag-long { background: var(--accent-dim); color: var(--accent); }
+  .tag-short { background: var(--warn-dim); color: var(--warn); }
+  .yt-card {
+    background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--radius);
+    overflow: hidden; margin-bottom: 24px;
+  }
+  .yt-embed { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
+  .yt-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .yt-body { padding: 20px 22px 24px; }
+  .yt-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .yt-body h3 {
+    font-size: 1.15rem; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 8px; line-height: 1.35;
+  }
+  .stats {
+    display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--text-muted); margin-bottom: 14px;
+  }
+  .stats b { color: var(--text); font-weight: 600; }
+  .formula, .insight { font-size: 14px; padding: 12px 14px; border-radius: var(--radius-sm); margin-top: 10px; }
+  .formula { background: var(--accent-dim); border-left: 3px solid var(--accent); color: var(--text); }
+  .insight { background: var(--accent-2-dim); border-left: 3px solid var(--accent-2); color: var(--text-muted); }
+  .formula strong, .insight strong {
+    display: block; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .formula strong { color: var(--accent); }
+  .insight strong { color: var(--accent-2); }
+  .link-card { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+  .link-card .handle { font-size: 13px; color: var(--text-muted); }
+  .link-card h3 { font-size: 1rem; font-weight: 650; line-height: 1.4; letter-spacing: -0.01em; }
+  .link-card .stats { margin-bottom: 0; }
+  .link-cta {
+    margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px;
+    font-weight: 600; color: var(--accent); padding-top: 4px;
+  }
+  .link-cta:hover { text-decoration: none; opacity: 0.85; }
+  .link-cta::after { content: "→"; }
+  .pattern-list { list-style: none; display: grid; gap: 12px; }
+  .pattern-list li {
+    background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--radius-sm);
+    padding: 16px 18px; display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start;
+  }
+  .pattern-list .n {
+    width: 36px; height: 36px; border-radius: 10px; background: var(--accent-dim); color: var(--accent);
+    font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center;
+  }
+  .pattern-list h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .pattern-list p { font-size: 14px; color: var(--text-muted); }
+  .suggest { counter-reset: sug; }
+  .suggest-item {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 24px; margin-bottom: 16px; position: relative;
+  }
+  .suggest-item::before {
+    counter-increment: sug; content: counter(sug); position: absolute; top: 20px; right: 22px;
+    font-size: 2rem; font-weight: 800; color: var(--border); line-height: 1;
+  }
+  .suggest-item h3 {
+    font-size: 1.15rem; font-weight: 750; letter-spacing: -0.015em; margin: 10px 0 14px;
+    max-width: 90%; line-height: 1.35;
+  }
+  .suggest-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .suggest-grid { display: grid; gap: 12px; margin-top: 8px; }
+  @media (min-width: 700px) { .suggest-grid { grid-template-columns: 1fr 1fr; } }
+  .sg-box { background: var(--bg-elev); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 14px; }
+  .sg-box strong {
+    display: block; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 4px;
+  }
+  .sg-box.full { grid-column: 1 / -1; }
+  .sg-hook { border-left: 3px solid var(--warn); background: var(--warn-dim); }
+  .table-wrap {
+    overflow-x: auto; border: 1px solid var(--border-soft); border-radius: var(--radius); background: var(--bg-card);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border-soft); }
+  th {
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim);
+    font-weight: 700; background: var(--bg-elev);
+  }
+  tr:last-child td { border-bottom: none; }
+  td a { font-weight: 500; }
+  footer {
+    border-top: 1px solid var(--border-soft); padding: 32px 0 16px; text-align: center;
+    color: var(--text-dim); font-size: 13px;
+  }
+  footer strong { color: var(--text-muted); }
+  .scan-note { font-size: 12px; color: var(--text-dim); margin-top: 8px; font-style: italic; }
+  .divider { height: 1px; background: var(--border-soft); margin: 48px 0; }
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Navegação">
+  <div class="nav-inner">
+    <span class="nav-brand">LAF · Criadores</span>
+    <a href="#hero">Início</a>
+    <a href="#rafael">Rafael</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#youtube">YouTube</a>
+    <a href="#x">X</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#padroes">Padrões</a>
+    <a href="#proximos">5 vídeos</a>
+    <a href="#criadores">Criadores</a>
+  </div>
+</nav>
+<div class="wrap">
+  <header class="hero" id="hero">
+    <div class="badge">Scan 04 set 2026 · PT</div>
+    <h1>Monitoramento de criadores &amp; concorrentes</h1>
+    <p class="lead">
+      Relatório visual do que bombou hoje no ecossistema AI creator — YouTube, X e Instagram —
+      com embeds, métricas, fórmulas replicáveis e 5 próximos vídeos sob medida para o Rafael.
+    </p>
+    <div class="meta-row">
+      <span><strong>Data:</strong> 4 de setembro de 2026</span>
+      <span><strong>Para:</strong> Rafael Rocha · LAF (Portugal)</span>
+      <span><strong>Objetivo:</strong> virar insight em conteúdo acionável</span>
+      <span><strong>Métricas:</strong> scan do dia (não inventadas)</span>
+    </div>
+  </header>
+  <section id="rafael">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Quem é o Rafael neste jogo</h2></div>
+    <p class="sec-desc">
+      Contexto que define o que vale copiar — e o que não vale. As sugestões de vídeo abaixo
+      foram filtradas por este perfil, não por “o que viralizou genérico”.
+    </p>
+    <div class="bio-card">
+      <p style="color:var(--text-muted); font-size:0.95rem;">
+        <strong style="color:var(--text);">Rafael Rocha</strong> — agência LAF (Portugal).
+        15 anos de marketing agency. Avançado com Grok Bot, Codex e Claude Code / Cloud Code.
+        Constrói software, web apps e apps para empresas. Está gravando um vídeo-âncora sobre
+        segundo cérebro em Obsidian. Testa Omarchy OS. Consome AI news todo dia. Às vezes vibe coding
+        por diversão. Estudante-praticante, não acadêmico — oral, energético, português de quem faz.
+      </p>
+      <div class="bio-grid">
+        <div class="chip"><label>Stack AI</label><span>Grok Bot · Codex · Claude Code</span></div>
+        <div class="chip"><label>Negócio</label><span>LAF agency · apps p/ empresas</span></div>
+        <div class="chip"><label>Em produção</label><span>Obsidian segundo cérebro (vídeo)</span></div>
+        <div class="chip"><label>Lab</label><span>Omarchy OS · vibe coding</span></div>
+        <div class="chip"><label>Ritmo</label><span>AI news diário · practitioner</span></div>
+        <div class="chip"><label>Voz</label><span>Oral · energético · pt-BR/PT</span></div>
+      </div>
+    </div>
+  </section>
+  <section id="dashboard">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Dashboard do scan</h2></div>
+    <p class="sec-desc">Topo do dia por rede. Todas as métricas abaixo vêm do scan de 2026-09-04.</p>
+    <div class="grid grid-4">
+      <div class="card metric"><div class="val accent">183k</div><div class="lbl">Top YouTube views</div><div class="sub">Nate Herk · Fable 5.1</div></div>
+      <div class="card metric"><div class="val blue">827k</div><div class="lbl">Top X views</div><div class="sub">Riley · 3 prompts / $218</div></div>
+      <div class="card metric"><div class="val pink">1.359</div><div class="lbl">Top IG likes</div><div class="sub">Riley · reel Astra</div></div>
+      <div class="card metric"><div class="val warn">4 / 4 / 3</div><div class="lbl">Hits YT · X · IG</div><div class="sub">Pacote do dia monitorado</div></div>
+    </div>
+    <p class="scan-note">Fonte: pesquisa/scan 2026-09-04 (PT). Sem métricas inventadas.</p>
+  </section>
+  <section id="youtube">
+    <div class="sec-head"><span class="sec-num">04</span><h2>YouTube — embeds + fórmula</h2></div>
+    <p class="sec-desc">Quatro long-forms que dominaram o feed AI de hoje. Embeds oficiais; stats do scan.</p>
+    <article class="yt-card">
+      <div class="yt-embed"><iframe src="https://www.youtube.com/embed/FFWtxjvW2ts" title="Nate Herk — Fable 5.1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+      <div class="yt-body">
+        <div class="yt-top"><span class="tag tag-yt">YouTube</span><span style="font-size:13px;color:var(--text-muted);">Nate Herk</span></div>
+        <h3>Fable 5.1 kills AI website slop</h3>
+        <div class="stats"><span><b>183k</b> views</span><span><b>2.7k</b> likes</span><span>~16 min</span></div>
+        <div class="formula"><strong>Fórmula</strong>Ferramenta nova + veredicto agressivo no título (“kills slop”) + demo visual antes da explicação técnica.</div>
+        <div class="insight"><strong>Insight p/ Rafael</strong>Encaixa no modo “mostrar o resultado pra cliente LAF”. Título oral, opinião clara — o que a agência precisa ouvir.</div>
+      </div>
+    </article>
+    <article class="yt-card">
+      <div class="yt-embed"><iframe src="https://www.youtube.com/embed/RYY0ibk4s60" title="NetworkChuck — DEFCON" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+      <div class="yt-body">
+        <div class="yt-top"><span class="tag tag-yt">YouTube</span><span style="font-size:13px;color:var(--text-muted);">NetworkChuck</span></div>
+        <h3>DEFCON Is Not What You Think</h3>
+        <div class="stats"><span><b>138k</b> views</span><span><b>3.4k</b> likes</span><span>~12 min</span></div>
+        <div class="formula"><strong>Fórmula</strong>Expectativa quebrada no título + storytelling + teaser no IG no mesmo dia (pacote multiplataforma).</div>
+        <div class="insight"><strong>Insight p/ Rafael</strong>Modelo de “não é o que você pensa” funciona pra Omarchy, agentes e segundo cérebro — mitos que empresário ouve.</div>
+      </div>
+    </article>
+    <article class="yt-card">
+      <div class="yt-embed"><iframe src="https://www.youtube.com/embed/NbUTIFEEXLY" title="Nate Herk — AI News GPT-6 Astra" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+      <div class="yt-body">
+        <div class="yt-top"><span class="tag tag-yt">YouTube</span><span style="font-size:13px;color:var(--text-muted);">Nate Herk</span></div>
+        <h3>AI News in 5 Mins — GPT-6 Astra</h3>
+        <div class="stats"><span><b>137k</b> views</span><span><b>1.4k</b> likes</span><span>~5:42</span></div>
+        <div class="formula"><strong>Fórmula</strong>Formato fixo (“em 5 mins”) + drop-day + ritmo noticioso. Número no hook = clique garantido.</div>
+        <div class="insight"><strong>Insight p/ Rafael</strong>Você já consome AI news todo dia — virar isso em série curta humorada+séria é quase zero effort extra.</div>
+      </div>
+    </article>
+    <article class="yt-card">
+      <div class="yt-embed"><iframe src="https://www.youtube.com/embed/tp29Fl0EK1w" title="Alex Finn — ChatGPT 6 Astra" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+      <div class="yt-body">
+        <div class="yt-top"><span class="tag tag-yt">YouTube</span><span style="font-size:13px;color:var(--text-muted);">Alex Finn</span></div>
+        <h3>ChatGPT 6 Astra released</h3>
+        <div class="stats"><span><b>126k</b> views</span><span><b>2.1k</b> likes</span><span>~13 min</span></div>
+        <div class="formula"><strong>Fórmula</strong>Launch-day lock-in: checklist + “o que fazer agora” + autoridade de quem testou na hora.</div>
+        <div class="insight"><strong>Insight p/ Rafael</strong>Versão empresário (não nerd) do checklist de lançamento/outage — perfeito pra audiência LAF.</div>
+      </div>
+    </article>
+    <p class="scan-note">Métricas YouTube: scan 2026-09-04.</p>
+  </section>
+  <section id="x">
+    <div class="sec-head"><span class="sec-num">05</span><h2>X — cards + métricas</h2></div>
+    <p class="sec-desc">Não dá pra embedar vídeo do X de forma confiável — cards com link direto + stats do scan. Note o peso dos bookmarks.</p>
+    <div class="grid grid-2">
+      <article class="card link-card">
+        <div><span class="tag tag-x">X</span><span class="handle"> · @rileybrown</span></div>
+        <h3>3 prompts / demo Fable · $218</h3>
+        <div class="stats"><span><b>827k</b> views</span><span><b>6.0k</b> likes</span><span><b>417</b> replies</span><span><b>178</b> RTs</span><span><b>1.8k</b> bookmarks</span></div>
+        <a class="link-cta" href="https://x.com/rileybrown/status/2095005898095653302" target="_blank" rel="noopener">Abrir no X</a>
+      </article>
+      <article class="card link-card">
+        <div><span class="tag tag-x">X</span><span class="handle"> · @rileybrown</span></div>
+        <h3>12 months: Flappy Bird → CoD</h3>
+        <div class="stats"><span><b>474k</b> views</span><span><b>5.7k</b> likes</span><span><b>2.0k</b> bookmarks</span></div>
+        <a class="link-cta" href="https://x.com/rileybrown/status/2095679352927056230" target="_blank" rel="noopener">Abrir no X</a>
+      </article>
+      <article class="card link-card">
+        <div><span class="tag tag-x">X</span><span class="handle"> · @AlexFinn</span></div>
+        <h3>ChatGPT-6 day checklist</h3>
+        <div class="stats"><span><b>411k</b> views</span><span><b>2.1k</b> likes</span><span><b>863</b> bookmarks</span></div>
+        <a class="link-cta" href="https://x.com/AlexFinn/status/2095535593560449272" target="_blank" rel="noopener">Abrir no X</a>
+      </article>
+      <article class="card link-card">
+        <div><span class="tag tag-x">X</span><span class="handle"> · @rileybrown</span></div>
+        <h3>“wow was business not visual”</h3>
+        <div class="stats"><span><b>227k</b> views</span><span><b>1.9k</b> likes</span><span><b>3.9k</b> bookmarks</span></div>
+        <a class="link-cta" href="https://x.com/rileybrown/status/2095650681755521030" target="_blank" rel="noopener">Abrir no X</a>
+      </article>
+    </div>
+    <p class="scan-note">Métricas X: scan 2026-09-04. Bookmarks altos = asset (prompt/checklist) ou “business wow”.</p>
+  </section>
+  <section id="instagram">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Instagram — cards + métricas</h2></div>
+    <p class="sec-desc">Teasers do mesmo dia do long-form. Pacote: IG puxa, YT segura.</p>
+    <div class="grid grid-3">
+      <article class="card link-card">
+        <div><span class="tag tag-ig">Instagram</span><span class="handle"> · @realrileybrown</span></div>
+        <h3>Reel Astra</h3>
+        <div class="stats"><span><b>1.359</b> likes</span></div>
+        <a class="link-cta" href="https://www.instagram.com/realrileybrown/reel/Dc2aAPIgcqG/" target="_blank" rel="noopener">Abrir no IG</a>
+      </article>
+      <article class="card link-card">
+        <div><span class="tag tag-ig">Instagram</span><span class="handle"> · @networkchuck</span></div>
+        <h3>Kids + AI</h3>
+        <div class="stats"><span><b>861</b> likes</span></div>
+        <a class="link-cta" href="https://www.instagram.com/networkchuck/p/Dc31iozOKPz/" target="_blank" rel="noopener">Abrir no IG</a>
+      </article>
+      <article class="card link-card">
+        <div><span class="tag tag-ig">Instagram</span><span class="handle"> · @networkchuck</span></div>
+        <h3>DEF CON teaser</h3>
+        <div class="stats"><span><b>651</b> likes</span></div>
+        <a class="link-cta" href="https://www.instagram.com/networkchuck/p/Dc1h8z-PL22/" target="_blank" rel="noopener">Abrir no IG</a>
+      </article>
+    </div>
+    <p class="scan-note">Métricas IG: scan 2026-09-04 (likes reportados).</p>
+  </section>
+  <section id="padroes">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Padrões / fórmulas pra copiar</h2></div>
+    <p class="sec-desc">O que o digest de hoje repetiu — e que você pode rodar amanhã sem copiar o tema, só a máquina.</p>
+    <ul class="pattern-list">
+      <li><span class="n">1</span><div><h4>Launch day = checklist + demo + business wow</h4><p>No dia do drop: um checklist (Alex), um demo visceral (Riley), um “wow era negócio não visual”. Três ângulos, um evento.</p></div></li>
+      <li><span class="n">2</span><div><h4>Bookmarks altos = asset ou business wow</h4><p>Prompt, checklist, playbook, ou “economizei $X / N meses”. Gente salva o que reusa. Seu CTA deve ser salvável.</p></div></li>
+      <li><span class="n">3</span><div><h4>Número concreto no hook</h4><p>$218 · 3 prompts · 12 months · 5 mins. Sem número, o título compete com o feed inteiro. Com número, vira ímã.</p></div></li>
+      <li><span class="n">4</span><div><h4>Resultado antes da tech</h4><p>Mostra a tela / o cliente / o $ primeiro. Explica o stack depois. Empatia do empresário &gt; ego do nerd.</p></div></li>
+      <li><span class="n">5</span><div><h4>IG teaser no mesmo dia do YT long</h4><p>Chuck e Riley reforçam o pacote: short/teaser puxa atenção; long segura retenção e autoridade.</p></div></li>
+    </ul>
+  </section>
+  <section id="proximos">
+    <div class="sec-head"><span class="sec-num">08</span><h2>5 próximos vídeos sugeridos</h2></div>
+    <p class="sec-desc">
+      Slate sob medida: Obsidian (já gravando), stack Grok/Codex/Claude, demo LAF estilo Riley,
+      news em 5 min, e checklist de lançamento pra empresário. Títulos orais, energéticos, em português.
+    </p>
+    <div class="suggest">
+      <article class="suggest-item">
+        <div class="suggest-meta"><span class="tag tag-long">YT long · âncora</span><span class="tag tag-pack">+ teaser IG/X</span></div>
+        <h3>Meu segundo cérebro em Obsidian — com agentes que trabalham pra mim</h3>
+        <div class="suggest-grid">
+          <div class="sg-box"><strong>Por que encaixa</strong>Você já está gravando. Posicione como peça âncora do canal: 15 anos de agência + stack de agentes = prova viva, não tutorial genérico.</div>
+          <div class="sg-box"><strong>Fórmula do digest</strong>Resultado antes da tech + “não é o que você pensa” (estilo Chuck) + asset salvável (template/vault structure).</div>
+          <div class="sg-box sg-hook full"><strong>CTA / gancho</strong>“Pare de anotar. Comece a mandar. Em 20 min eu mostro o vault que roda a LAF comigo — e o agente que lê isso no lugar de você.”</div>
+        </div>
+      </article>
+      <article class="suggest-item">
+        <div class="suggest-meta"><span class="tag tag-long">YT long · masterclass</span><span class="tag tag-short">clip shorts</span></div>
+        <h3>Um dia real com Grok Bot + Codex + Claude Code — o trio que eu uso na LAF (e no Omarchy)</h3>
+        <div class="suggest-grid">
+          <div class="sg-box"><strong>Por que encaixa</strong>Você é avançado nessas três tools, testa Omarchy, constrói apps. Ninguém na sua faixa mostra o workflow diário junto — só “review” isolado.</div>
+          <div class="sg-box"><strong>Fórmula do digest</strong>Demo visceral (Riley) + números no hook (“3 tools, 1 dia, N entregas”) + bookmarks = playbook reutilizável.</div>
+          <div class="sg-box sg-hook full"><strong>CTA / gancho</strong>“Esquece ‘qual IA é melhor’. Olha o que as três fazem juntas numa manhã de cliente. Spoiler: Codex escreve, Claude revisa, Grok manda o briefing.”</div>
+        </div>
+      </article>
+      <article class="suggest-item">
+        <div class="suggest-meta"><span class="tag tag-long">YT long · demo</span><span class="tag tag-pack">pack X + IG</span></div>
+        <h3>Construí X pro cliente LAF em N prompts — e economizei Y horas (ou €Z)</h3>
+        <div class="suggest-grid">
+          <div class="sg-box"><strong>Por que encaixa</strong>Agência real + apps pra empresas. Riley explode com $218 / 3 prompts — você tem cases LAF com tempo e dinheiro de verdade. Visceral &gt; teórico.</div>
+          <div class="sg-box"><strong>Fórmula do digest</strong>Número concreto no hook + show result first + business wow (não visual) + alto bookmark = asset (prompts).</div>
+          <div class="sg-box sg-hook full"><strong>CTA / gancho</strong>“Cliente pediu. Eu abri o Codex. Em N prompts tinha o entregável. Aqui está o antes/depois — e o prompt pack que você baixa.”</div>
+        </div>
+      </article>
+      <article class="suggest-item">
+        <div class="suggest-meta"><span class="tag tag-short">série curta · ~5–7 min</span><span class="tag tag-pack">drop-day</span></div>
+        <h3>AI News em 5 min (com café e sem enrolação) — episódio do drop</h3>
+        <div class="suggest-grid">
+          <div class="sg-box"><strong>Por que encaixa</strong>Você já lê AI news todo dia. Formato Nate: humor + seriedade, ritmado, drop-day. Série = hábito do algoritmo e da audiência.</div>
+          <div class="sg-box"><strong>Fórmula do digest</strong>“Em 5 mins” no título + launch day timing + teaser IG no mesmo dia do long/short.</div>
+          <div class="sg-box sg-hook full"><strong>CTA / gancho</strong>“Saiu. Eu testei. Em 5 minutos: o que muda pra agência, o que é hype, e o que você faz hoje — não amanhã.”</div>
+        </div>
+      </article>
+      <article class="suggest-item">
+        <div class="suggest-meta"><span class="tag tag-long">YT / X checklist</span><span class="tag tag-pack">asset bookmarkável</span></div>
+        <h3>Checklist do dia do lançamento (pra empresário, não pra nerd) — o playbook quando a IA cai ou explode</h3>
+        <div class="suggest-grid">
+          <div class="sg-box"><strong>Por que encaixa</strong>Audiência LAF = donos de negócio. Alex Finn trava o feed com checklist no dia do ChatGPT-6. Versão “outage / launch playbook” em português é gap óbvio.</div>
+          <div class="sg-box"><strong>Fórmula do digest</strong>Launch-day lock-in + checklist salvável (bookmarks) + linguagem empresário + pack multiplataforma.</div>
+          <div class="sg-box sg-hook full"><strong>CTA / gancho</strong>“A ferramenta caiu / lançou. Seu time trava. Eu não. Aqui está o checklist de 9 passos que a LAF usa — copia, salva, manda pro WhatsApp do time.”</div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <div class="divider"></div>
+  <section id="criadores">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Criadores monitorados</h2></div>
+    <p class="sec-desc">Handles do radar deste scan. Úteis pra follow diário.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Criador</th><th>YouTube</th><th>X</th><th>Instagram</th><th>Notas no scan</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Nate Herk</strong></td><td>Nate Herk</td><td>—</td><td>—</td><td>2 longs no top (Fable + AI News 5 min)</td></tr>
+          <tr><td><strong>NetworkChuck</strong></td><td>NetworkChuck</td><td>—</td><td>@networkchuck</td><td>YT DEFCON + 2 posts IG (teaser + kids AI)</td></tr>
+          <tr><td><strong>Alex Finn</strong></td><td>Alex Finn</td><td>@AlexFinn</td><td>—</td><td>YT Astra + X checklist (411k)</td></tr>
+          <tr><td><strong>Riley Brown</strong></td><td>—</td><td>@rileybrown</td><td>@realrileybrown</td><td>3 hits X + 1 reel IG — dominante do dia</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <footer>
+    <p>Gerado por <strong>Paulo</strong> (Chefe de conteúdo) · <strong>LAF</strong> · 4 de setembro de 2026</p>
+    <p style="margin-top:8px;">Monitoramento criadores · métricas do scan 2026-09-04 · uso interno</p>
+  </footer>
+</div>
+</body>
+</html>
