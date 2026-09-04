@@ -4,31 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monitoramento Criadores · 2026-09-04 · LAF</title>
-<style>
-  body{margin:0;background:#0b0d12;color:#9aa3b5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-  #boot{padding:48px 24px;text-align:center}
-</style>
+<style>body{margin:0;background:#0b0d12;color:#9aa3b5;font-family:system-ui,sans-serif}#boot{padding:48px 24px;text-align:center}</style>
 </head>
 <body>
 <div id="boot">Carregando report…</div>
 <script>
 (async () => {
   const boot = document.getElementById("boot");
+  const parts = ['part-0.html.txt', 'part-1.html.txt', 'part-2.html.txt', 'part-3.html.txt', 'part-4.html.txt', 'part-5.html.txt'];
+  const bases = [
+    "",
+    "https://raw.githubusercontent.com/rafaelrards/laf-criadores-report/main/reports/2026-09-04-criadores/"
+  ];
   try {
-    const parts = ["part-0.html.txt","part-1.html.txt","part-2.html.txt","part-3.html.txt"];
-    const base = new URL(".", location.href).href.includes("htmlpreview")
-      ? "https://raw.githubusercontent.com/rafaelrards/laf-criadores-report/main/reports/2026-09-04-criadores/"
-      : "";
-    let html = "";
-    for (const p of parts) {
-      const url = base ? base + p : p;
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error(url + " → " + res.status);
-      html += await res.text();
+    let html = "", lastErr;
+    for (const base of bases) {
+      try {
+        html = "";
+        for (const p of parts) {
+          const res = await fetch(base + p, { cache: "no-store" });
+          if (!res.ok) throw new Error(p + " → " + res.status);
+          html += await res.text();
+        }
+        lastErr = null;
+        break;
+      } catch (e) { lastErr = e; }
     }
-    document.open();
-    document.write(html);
-    document.close();
+    if (lastErr) throw lastErr;
+    document.open(); document.write(html); document.close();
   } catch (e) {
     boot.textContent = "Falha ao carregar report: " + e;
   }
